@@ -35,7 +35,7 @@
       if (!list.length) { document.getElementById("empty").hidden = false; return; }
       document.getElementById("list").innerHTML = list.map(function (p) {
         var sample = String(p.description || "").slice(0, 120);
-        return '<article class="sheet"><a href="preview.html#' + p.id + '"><img alt="" src="' + (p.images[0] || "") + '" style="width:100%;height:140px;object-fit:contain;background:#000;border-radius:12px"></a><h2 class="copy" style="margin-top:10px">' + p.name + '</h2><p class="desc copy">' + sample + (p.description.length > 120 ? "…" : "") + '</p><p class="desc">Partial sample. Full version is paid.</p><button class="buy" type="button" data-buy="' + p.id + '">Buy Now</button></article>';
+        return '<article class="sheet"><a href="preview.html#' + p.id + '?from=free"><img alt="" src="' + (p.images[0] || "") + '" style="width:100%;height:140px;object-fit:contain;background:#000;border-radius:12px"></a><h2 class="copy" style="margin-top:10px">' + p.name + '</h2><p class="desc copy">' + sample + (p.description.length > 120 ? "…" : "") + '</p><p class="desc">Partial sample. Full version is paid.</p><button class="buy" type="button" data-buy="' + p.id + '">Buy Now</button></article>';
       }).join("");
       document.getElementById("list").onclick = function (e) {
         var b = e.target.closest("[data-buy]");
