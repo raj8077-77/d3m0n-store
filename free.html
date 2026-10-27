@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#07060c" />
+  <title>Free · D3M0N.IN</title>
+  <link rel="icon" href="https://ik.imagekit.io/silentgamers/Picsart_26-10-03_02-00-17-755.png?updatedAt=1790973036512&ik-s=cb860e00d6fdf3a8e6886e7b6a485ebc47ca2209" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/theme.css" />
+</head>
+<body>
+  <header>
+    <a class="nav-btn" href="index.html" aria-label="Home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18 9 12l6-6"/></svg></a>
+    <div class="brand">D3M0N<b>.IN</b></div>
+    <span></span>
+  </header>
+  <nav class="subnav">
+    <a href="index.html">Home</a>
+    <a href="catalog.html">Catalog</a>
+    <a class="on" href="free.html">Free</a>
+  </nav>
+  <main>
+    <p class="kicker">Free</p>
+    <h1 class="h1" style="margin-top:6px;font-size:1.6rem">Samples</h1>
+    <p class="desc">Free-tagged products. Sample is partial. Full file still goes through Buy Now.</p>
+    <div id="list" style="margin-top:14px"></div>
+    <p class="empty" id="empty" hidden>No free products right now.</p>
+  </main>
+  <script src="js/core.js"></script>
+  <script>
+    D3.protect();
+    D3.load().then(function (data) {
+      var list = data.products.filter(function (p) { return p.keywords.indexOf("free") !== -1; });
+      if (!list.length) { document.getElementById("empty").hidden = false; return; }
+      document.getElementById("list").innerHTML = list.map(function (p) {
+        var sample = String(p.description || "").slice(0, 120);
+        return '<article class="sheet"><a href="preview.html#' + p.id + '"><img alt="" src="' + (p.images[0] || "") + '" style="width:100%;height:140px;object-fit:contain;background:#000;border-radius:12px"></a><h2 class="copy" style="margin-top:10px">' + p.name + '</h2><p class="desc copy">' + sample + (p.description.length > 120 ? "…" : "") + '</p><p class="desc">Partial sample. Full version is paid.</p><button class="buy" type="button" data-buy="' + p.id + '">Buy Now</button></article>';
+      }).join("");
+      document.getElementById("list").onclick = function (e) {
+        var b = e.target.closest("[data-buy]");
+        if (!b) return;
+        var p = list.filter(function (it) { return String(it.id) === b.getAttribute("data-buy"); })[0];
+        if (p) D3.buy(p);
+      };
+    }).catch(function () {
+      document.getElementById("empty").hidden = false;
+      document.getElementById("empty").textContent = "Free list could not be opened.";
+    });
+  </script>
+</body>
+</html>
