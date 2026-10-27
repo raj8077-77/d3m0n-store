@@ -35,7 +35,7 @@
     var picked = {};
     var all = [];
     function card(p) {
-      return '<article class="card"><a href="preview.html#' + p.id + '"><img alt="" src="' + (p.images[0] || "") + '"></a><div class="meta"><h3 class="copy">' + p.name + '</h3><div class="price">' + p.price + '</div><div class="chips">' + p.keywords.map(function (k) { return '<span class="chip">' + k + '</span>'; }).join("") + '</div><button class="buy" type="button" data-buy="' + p.id + '">Buy Now</button></div></article>';
+      return '<article class="card"><a href="preview.html#' + p.id + '?from=catalog"><img alt="" src="' + (p.images[0] || "") + '"></a><div class="meta"><h3 class="copy">' + p.name + '</h3><div class="price">' + p.price + '</div><div class="chips">' + p.keywords.map(function (k) { return '<span class="chip">' + k + '</span>'; }).join("") + '</div><button class="buy" type="button" data-buy="' + p.id + '">Buy Now</button></div></article>';
     }
     function draw() {
       var q = document.getElementById("q").value.trim().toLowerCase();
