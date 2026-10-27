@@ -1,0 +1,29 @@
+name: Sync products
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Fetch sheet and encrypt
+        env:
+          SHEET_CSV_URL: ${{ secrets.SHEET_CSV_URL }}
+          AES_PASS: d3m0n.in-products-aes-2026
+          OFFER: ${{ vars.OFFER }}
+          HOME_VIDEO: ${{ vars.HOME_VIDEO }}
+        run: node tools/encrypt.mjs
+      - name: Commit encrypted snapshot
+        run: |
+          git config user.name "d3m0n-bot"
+          git config user.email "bot@d3m0n.in"
+          git add data/products.enc
+          git diff --cached --quiet || git commit -m "sync products.enc" 
+          git push

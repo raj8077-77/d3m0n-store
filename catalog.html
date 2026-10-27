@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#07060c" />
+  <title>Catalog · D3M0N.IN</title>
+  <link rel="icon" href="https://ik.imagekit.io/silentgamers/Picsart_26-10-03_02-00-17-755.png?updatedAt=1790973036512&ik-s=cb860e00d6fdf3a8e6886e7b6a485ebc47ca2209" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/theme.css" />
+</head>
+<body>
+  <header>
+    <a class="nav-btn" href="index.html" aria-label="Home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18 9 12l6-6"/></svg></a>
+    <div class="brand">D3M0N<b>.IN</b></div>
+    <span></span>
+  </header>
+  <nav class="subnav">
+    <a href="index.html">Home</a>
+    <a class="on" href="catalog.html">Catalog</a>
+    <a href="free.html">Free</a>
+  </nav>
+  <main>
+    <p class="kicker">Catalog</p>
+    <h1 class="h1" style="margin-top:6px;font-size:1.6rem">Products</h1>
+    <input class="search" id="q" type="search" placeholder="Search name" autocomplete="off" />
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid" style="margin-top:14px"></div>
+    <p class="empty" id="empty" hidden>No match.</p>
+  </main>
+  <script src="js/core.js"></script>
+  <script>
+    D3.protect();
+    var KEYS = ["n8n automations", "Office use", "kid safety", "freelancer", "video editor", "photo editor", "gamers", "apks", "prompts", "free"];
+    var picked = {};
+    var all = [];
+    function card(p) {
+      return '<article class="card"><a href="preview.html#' + p.id + '"><img alt="" src="' + (p.images[0] || "") + '"></a><div class="meta"><h3 class="copy">' + p.name + '</h3><div class="price">' + p.price + '</div><div class="chips">' + p.keywords.map(function (k) { return '<span class="chip">' + k + '</span>'; }).join("") + '</div><button class="buy" type="button" data-buy="' + p.id + '">Buy Now</button></div></article>';
+    }
+    function draw() {
+      var q = document.getElementById("q").value.trim().toLowerCase();
+      var on = Object.keys(picked).filter(function (k) { return picked[k]; });
+      var list = all.filter(function (p) {
+        var text = (p.name + " " + p.fullName).toLowerCase();
+        if (q && text.indexOf(q) === -1) return false;
+        if (!on.length) return true;
+        return on.some(function (k) { return p.keywords.indexOf(k) !== -1; });
+      });
+      document.getElementById("grid").innerHTML = list.map(card).join("");
+      document.getElementById("empty").hidden = list.length > 0;
+    }
+    D3.load().then(function (data) {
+      all = data.products;
+      document.getElementById("chips").innerHTML = KEYS.map(function (k) {
+        return '<button class="chip" type="button" data-k="' + k + '">' + k + '</button>';
+      }).join("");
+      document.getElementById("chips").onclick = function (e) {
+        var b = e.target.closest("[data-k]");
+        if (!b) return;
+        var k = b.getAttribute("data-k");
+        picked[k] = !picked[k];
+        b.classList.toggle("on", picked[k]);
+        draw();
+      };
+      document.getElementById("q").oninput = draw;
+      document.getElementById("grid").onclick = function (e) {
+        var b = e.target.closest("[data-buy]");
+        if (!b) return;
+        var p = all.filter(function (it) { return String(it.id) === b.getAttribute("data-buy"); })[0];
+        if (p) D3.buy(p);
+      };
+      draw();
+    }).catch(function () {
+      document.getElementById("empty").hidden = false;
+      document.getElementById("empty").textContent = "Catalog could not be opened.";
+    });
+  </script>
+</body>
+</html>
