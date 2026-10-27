@@ -25,7 +25,7 @@
   }
 
   function buy(product) {
-    var text = "Hi, I want to buy #" + product.id + " " + product.name;
+    var text = "Hi, I want to buy #" + product.id + " " + product.name + ". Please share details.";
     location.href = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text);
   }
 
