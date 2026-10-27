@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#07060c" />
+  <meta name="description" content="D3m0n.in — digital products, workflows, prompts, APKs." />
+  <title>D3M0N.IN</title>
+  <link rel="icon" href="https://ik.imagekit.io/silentgamers/Picsart_26-10-03_02-00-17-755.png?updatedAt=1790973036512&ik-s=cb860e00d6fdf3a8e6886e7b6a485ebc47ca2209" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/theme.css" />
+</head>
+<body>
+  <header>
+    <img class="brand-icon" alt="" src="https://ik.imagekit.io/silentgamers/Picsart_26-10-03_02-00-17-755.png?updatedAt=1790973036512&ik-s=cb860e00d6fdf3a8e6886e7b6a485ebc47ca2209" />
+    <div class="brand">D3M0N<b>.IN</b></div>
+    <a class="nav-btn" href="catalog.html" aria-label="Catalog">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </a>
+  </header>
+  <nav class="subnav">
+    <a class="on" href="index.html">Home</a>
+    <a href="catalog.html">Catalog</a>
+    <a href="free.html">Free</a>
+  </nav>
+  <main class="home">
+    <section class="profile">
+      <img class="pfp" alt="Raj Malik" src="https://ik.imagekit.io/silentgamers/Picsart_26-10-03_01-46-39-021.png?updatedAt=1790972949400&ik-s=cb6a1776d844d66c954e207602a21ef7663da421" />
+      <h1 class="name">Ꮢᴀᴊ ᴍᴀʟɪᴋ</h1>
+      <p class="tagline">Just a beginning of new era and ideas</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/d3m0n.in/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@d3m0n-in" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12.2s0-3.2-.4-4.6c-.2-.9-.9-1.6-1.8-1.8C19.2 5.4 12 5.4 12 5.4s-7.2 0-8.8.4c-.9.2-1.6.9-1.8 1.8C1 9 1 12.2 1 12.2s0 3.2.4 4.6c.2.9.9 1.6 1.8 1.8 1.6.4 8.8.4 8.8.4s7.2 0 8.8-.4c.9-.2 1.6-.9 1.8-1.8.4-1.4.4-4.6.4-4.6zM9.8 15.5v-6.6l6.2 3.3-6.2 3.3z"/></svg>
+        </a>
+        <a href="https://t.me/d3m0n_in" target="_blank" rel="noopener" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.8 4.3 2.9 11.6c-1.3.5-1.3 1.2-.2 1.5l4.8 1.5 1.9 5.8c.2.7.1.9.8.9.5 0 .7-.2 1-.5l2.7-2.6 5.6 4.1c1 .6 1.8.3 2-.9l3.6-16.2c.3-1.4-.5-2-1.3-1.6z"/></svg>
+        </a>
+      </div>
+      <button class="chip" id="raidBtn" type="button" style="margin-top:14px">Illegal products</button>
+    </section>
+    <div>
+      <div id="offer"></div>
+      <p class="kicker">Featured</p>
+      <div class="stage" id="stage"><div class="track" id="track"></div></div>
+      <div id="player"></div>
+      <div class="channels">
+        <a href="https://www.instagram.com/d3m0n.in/" target="_blank" rel="noopener"><b>Broadcast channel</b><span>Instagram</span></a>
+        <a href="https://t.me/d3m0n_in" target="_blank" rel="noopener"><b>Telegram channel</b><span>Telegram</span></a>
+      </div>
+      <p class="notice" id="notice"></p>
+    </div>
+  </main>
+  <div class="raid" id="raid" aria-hidden="true" style="position:fixed;inset:0;z-index:90;pointer-events:none">
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,.62)"></div>
+    <img alt="" src="https://ik.imagekit.io/silentgamers/Picsart_26-10-03_14-11-29-809.png?updatedAt=1791017227196&ik-s=e4645f2f3f7e2d52182b83816f2f7e7b94db7b9d" style="position:absolute;right:4vw;bottom:0;height:80vh;object-fit:contain" />
+  </div>
+  <audio id="police" preload="auto" src="police.mp3"></audio>
+  <audio id="funny" preload="auto" src="funny.mp3"></audio>
+  <script src="js/core.js"></script>
+  <script src="js/player.js"></script>
+  <script>
+    D3.protect();
+    var raidOn = false;
+    document.getElementById("raidBtn").onclick = function () {
+      raidOn = !raidOn;
+      document.getElementById("raid").style.display = raidOn ? "block" : "none";
+      var a = document.getElementById(raidOn ? "police" : "funny");
+      if (a) { a.currentTime = 0; var p = a.play(); if (p) p.catch(function () {}); }
+    };
+    document.getElementById("raid").style.display = "none";
+    D3.load().then(function (data) {
+      document.getElementById("notice").textContent = data.notice || "";
+      var offer = D3.byId(data, data.offer);
+      if (offer) {
+        document.getElementById("offer").innerHTML =
+          '<a class="offer" href="preview.html#' + offer.id + '"><img alt="" src="' + (offer.images[0] || "") + '"><div><span class="kicker">Latest offer</span><b class="copy">#' + offer.id + ' ' + offer.name + '</b><i class="price">' + offer.price + '</i></div></a>';
+      }
+      var track = document.getElementById("track");
+      var at = 0;
+      track.innerHTML = data.products.map(function (p, i) {
+        return '<a class="slot' + (i === 0 ? " main" : "") + '" href="preview.html#' + p.id + '"><img alt="" src="' + (p.images[0] || "") + '"><div class="meta"><h3 class="copy">' + p.name + '</h3><div class="price">' + p.price + '</div></div></a>';
+      }).join("");
+      function go(i) {
+        at = Math.max(0, Math.min(data.products.length - 1, i));
+        var slot = track.children[0];
+        var w = slot ? slot.getBoundingClientRect().width + 12 : 180;
+        track.style.transform = "translateX(" + (-at * w) + "px)";
+        Array.from(track.children).forEach(function (el, k) { el.classList.toggle("main", k === at); });
+      }
+      var startX = 0;
+      track.parentElement.addEventListener("touchstart", function (e) { startX = e.changedTouches[0].clientX; }, { passive: true });
+      track.parentElement.addEventListener("touchend", function (e) {
+        var dx = e.changedTouches[0].clientX - startX;
+        if (dx < -28) go(at + 1);
+        else if (dx > 28) go(at - 1);
+      });
+      mountPlayer(document.getElementById("player"), D3.ytId(data.homeVideo), data.endThumb);
+    }).catch(function () {
+      document.getElementById("notice").textContent = "Catalog could not be opened.";
+    });
+  </script>
+</body>
+</html>
